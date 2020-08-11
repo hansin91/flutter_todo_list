@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/task_provider.dart';
 import '../widgets/tasks_list.dart';
 import '../screens/add_task_screen.dart';
 
@@ -12,7 +14,10 @@ class TasksScreen extends StatelessWidget {
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (context) => AddTaskScreen());
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => AddTaskScreen()
+          );
         },
       ),
       body: Column(
@@ -41,11 +46,16 @@ class TasksScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600
                   ),
                 ),
-                Text('12 tasks',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18
-                  ),
+                Consumer<TaskProvider>(
+                  builder: (context, data, child) {
+                    return Text(
+                      '${data.taskCount} tasks',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
